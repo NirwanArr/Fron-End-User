@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { login, getEmail } from "../../api/fetching";
+import { login} from "../../api/fetching";
+import { getEmail } from "../../api/fetching";
 import axios from "axios";
 
 const LoginPage = () => {

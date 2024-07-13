@@ -6,6 +6,7 @@ import CoursePage from "./pages/CoursePage/CoursePage";
 import NotFound from "./pages/NotfoundPage/NotFound";
 import MyCoursePage from "./pages/MyCoursePage/MyCoursePage";
 import VideoPage from "./pages/VideoPage/VideoPage";
+import FreeCoursePage from "./pages/FreeCoursePage/FreeCoursePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import OTPPage from "./pages/OTPPage/OTPPage";
@@ -20,7 +21,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/course/:userId" element={<CoursePage />} />
+          <Route path="/course" element={<CoursePage />} />
+          <Route path="/course/:courseId" element={<FreeCoursePage />} />
           <Route path="/mycourse/:userId" element={<MyCoursePage />} />
           <Route path="/notif" element={<NotificationPage />} />
           <Route path="/user/:userId" element={<UserPage />} />

@@ -1,7 +1,7 @@
 // import ReactPlayer from "react-player";
 
 import { ArrowLeft } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ProgressCourse from "../../components/VideoComponent/ProgressCourse";
 import Navbar from "../../components/NavbarComponent/Navbar";
 import Main from "../../components/VideoComponent/Main";
@@ -10,12 +10,13 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 // import PopupOnboarding from "../../components/VideoComponent/PopupOnboarding";
 // import { getCourseById, updateCourseStatus } from "../../api/fetching";
-import { getCourseById } from "../../api/fetching";
+import {  getCourseByIdFree } from "../../api/fetching";
 
 
 
-const VideoPage = () => {
-  const { userId, courseId } = useParams();
+const FreeCoursePage = () => {
+  const navi = useNavigate()
+  const {  courseId } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [course, setCourse] = useState();
   const [videoLink, setVideoLink] = useState();
@@ -25,13 +26,15 @@ const VideoPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resData = await getCourseById(courseId);
+        let resData = await getCourseByIdFree(courseId);
         // const resData = await getCourseById(userId, courseId);
         // await updateCourseStatus(userId, courseId);
         // await updateCourseStatus(courseId);
         // let ContentStatus
 
         console.log(resData)
+
+        resData = resData.data
 
 
 
@@ -55,15 +58,16 @@ const VideoPage = () => {
 
         setVideoLink(firstVideoLink);
         setCourse(resData);
-        setContentStatus(resData.courseProgressInPercentage);
+        setContentStatus(false);
       } catch (err) {
+        navi("/login")
         throw new Error(err.message);
       }
     };
     fetchData();
 
     
-  }, [userId, courseId, isLoading]);
+  }, [ courseId, isLoading]);
 
   const handleSetVideoLink = (link) => {
     setVideoLink(link);
@@ -100,7 +104,7 @@ const VideoPage = () => {
       <div className="relative w-full">
         <div className="z-10 left-[50%] -translate-x-[50%] absolute w-full md:w-10/12 mt-20 md:mt-24 ">
           {/* Tombol kembali ke halaman kelas */}
-          <Link to={`/myCourse/${userId}`}>
+          <Link to={`/course`}>
             <h1 className="flex items-center text-sm font-semibold transition-all duration-300 md:text-base hover:underline hover:scale-105">
               <span className="block mr-1 md:mr-2">
                 <ArrowLeft className="w-4 h-4" />
@@ -137,4 +141,4 @@ const VideoPage = () => {
   );
 };
 
-export default VideoPage;
+export default FreeCoursePage;

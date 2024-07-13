@@ -36,6 +36,7 @@ const Navbar = () => {
     }
     return null;
   };
+  
   const userId = getUserIdFromToken();
 
   // logic navbar on scroll to blur background

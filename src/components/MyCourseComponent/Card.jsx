@@ -8,10 +8,11 @@ import { FaStar } from "react-icons/fa";
 import { getCourseById } from "../../api/fetching";
 
 // card course
+
 const Card = ({ item, id }) => {
   return (
     <>
-      <Link to={`/video/${id}/${item.courseId}`}>
+      <Link to={`/video/${id}/${item.courseUserId}`}>
         <div className="w-full pb-3 overflow-hidden bg-white rounded-lg">
           <div className="flex flex-col">
             <div>

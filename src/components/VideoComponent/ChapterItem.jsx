@@ -2,21 +2,26 @@
 import PropTypes from "prop-types";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaRegPauseCircle } from "react-icons/fa";
-import { updateStatus } from "../../api/fetching";
+import { updateCourseStatus } from "../../api/fetching";
+import { useParams } from "react-router-dom";
 
 // isi dari setiap chapter
 const ChapterItem = ({ contentData, isActive, handleVideoLink, index }) => {
+  const { courseId } = useParams();
   if (!contentData) {
     return null; // Atau tindakan yang sesuai jika item tidak ada
   }
-  const status = contentData.status || false;
 
-  const chapterId = contentData.chapterId;
+  console.log(contentData)
+
+  const status = contentData.isWatched || false;
+  
+  // const chapterId = contentData.chapterId;
   const contentId = contentData.id;
 
   const handleContentStatus = async () => {
     try {
-      await updateStatus(chapterId, contentId);
+      await updateCourseStatus(courseId, contentId);
     } catch (err) {
       throw new Error(err.message);
     }

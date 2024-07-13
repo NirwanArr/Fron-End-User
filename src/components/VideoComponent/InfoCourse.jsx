@@ -13,9 +13,12 @@ const InfoCourse = ({ item }) => {
   }
   return (
     <div className="mx-4 md:mx-0">
+        <h1 className="text-base font-semibold text-color-primary md:text-lg">
+          {item.courseName}
+        </h1>
       <div className="flex items-center justify-between">
         <h1 className="text-base font-semibold text-color-primary md:text-lg">
-          {item.Category}
+          {item.category}
         </h1>
         <p className="flex text-sm font-semibold md:text-base">
           <span className="mr-1 md:mr-2">

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 // persentase progress
 export default function ProgressBar({ contentStatus }) {
-  const trueCount = contentStatus.filter((status) => status).length;
-  const totalContents = contentStatus.length;
-  const truePercentage = (trueCount / totalContents) * 100;
+  // const trueCount = contentStatus.filter((status) => status).length;
+  // const totalContents = contentStatus.length;
+  // const truePercentage = (trueCount / totalContents) * 100;
 
   return (
     <div className="flex items-center">
@@ -18,14 +18,14 @@ export default function ProgressBar({ contentStatus }) {
         <div
           style={{
             height: "100%",
-            width: `${truePercentage}%`,
+            width: `${contentStatus}%`,
             backgroundColor: "purple",
             transition: "width 0.5s",
           }}
           className="animate-fade"
         ></div>
         <span className="font-semibold absolute top-[50%] left-3 -translate-y-[50%] text-white text-xs drop-shadow-lg progressPercent">
-          {truePercentage.toFixed(2)}% Complete
+          {contentStatus.toFixed(2)}% Complete
         </span>
       </div>
     </div>
@@ -33,5 +33,5 @@ export default function ProgressBar({ contentStatus }) {
 }
 
 ProgressBar.propTypes = {
-  contentStatus: PropTypes.array,
+  contentStatus: PropTypes.number,
 };

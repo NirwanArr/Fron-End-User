@@ -174,7 +174,7 @@ const HomePage = () => {
               Kursus Populer
             </h1>
           </div>
-          <Link to={`/course/${userId}`} className="text-sm text-indigo-500">
+          <Link to={`/course`} className="text-sm text-indigo-500">
             Lihat Semua
           </Link>
         </div>

@@ -11,12 +11,13 @@ const CoursePage = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState([]);
   const [level, setLevel] = useState([]);
-  const [valueChecked, setValueChecked] = useState("");
+  const [selecCategory, setSelectedCategories] = useState([]);
+  const [selectLevel, setSelectLevel] = useState("");
   const [courses, setCourses] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resCourse = await getCourse();
+        const resCourse = await getCourse({selecCategory, selectLevel});
         const resGetCategory = await getCategory();
         setCourses(resCourse);
         setCategory(resGetCategory);
@@ -25,32 +26,34 @@ const CoursePage = () => {
         throw new Error(err.message);
       }
     };
+
     fetchData();
-  }, []);
+  }, [selecCategory, selectLevel]);
+
+
+  const handleSelectLevel = (e) => {
+    setSelectLevel(e.target.value)
+  }
+
   const handleCheckboxChange = (e) => {
-    setValueChecked(e.target.checked ? e.target.value : "");
+    const value = e.target.value;
+    if (e.target.checked) {
+      setSelectedCategories((prev) => [...prev, parseInt(value)]);
+    } else {
+      setSelectedCategories((prev) => prev.filter((id) => id !== parseInt(value)));
+    }
   };
 
   const handleCardClick = async (courseId) => {
-    const token = localStorage.getItem("...");
+    // const token = localStorage.getItem("...");
 
-    try {
-      await createCourse(userId, courseId, token);
-
-      navigate(`/video/${userId}/${courseId}`);
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.status === "Fail" &&
-        error.response.data.message === "User already has this course."
-      ) {
-        alert("You already have this course.");
-      } else {
-        alert(error.message);
-      }
-    }
+    // await createCourse(userId, courseId, token);
+    setTimeout(() => {
+      
+    navigate(`/course/${courseId}`, {replace: true});
+    }, 200);
   };
+  
   return (
     <>
       <Navbar />
@@ -82,11 +85,13 @@ const CoursePage = () => {
                   categorys={category}
                   levels={level}
                   handleCheckboxChange={handleCheckboxChange}
+                  handleSelectLevel={handleSelectLevel}
+                  setSelectLevel={setSelectLevel}
                 />
               </div>
               <div className="col-span-3 md:col-span-2">
                 <Main
-                  valueChecked={valueChecked}
+                  // valueChecked={valueChecked}
                   courses={courses}
                   handleCardClick={handleCardClick}
                 />

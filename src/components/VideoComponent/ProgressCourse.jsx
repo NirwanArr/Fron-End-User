@@ -11,6 +11,7 @@ const ProgressCourse = ({
   handleVideoLink,
   contentStatus,
   onVideoClick,
+  setIsloading
 }) => {
   if (!chapters) {
     return null; // Atau tindakan yang sesuai jika item tidak ada
@@ -37,9 +38,10 @@ const ProgressCourse = ({
         <div className="grid grid-cols-2 md:gap-x-2">
           <h1 className="ml-2 text-sm font-semibold md:text-base">
             Materi Belajar
-          </h1>
+          </h1> 
           <div className="">
-            <ProgressBar contentStatus={contentStatus} />
+            {contentStatus &&  <ProgressBar contentStatus={contentStatus} /> }
+          
           </div>
         </div>
         {/* loop judul chapter  */}
@@ -60,12 +62,13 @@ const ProgressCourse = ({
                 className={cn(
                   "duration-300 cursor-pointer",
                   isActive.title === i &&
-                    isActive.chapter === x &&
-                    "scale-105 bg-primary text-white"
+                  isActive.chapter === x &&
+                  "scale-105 bg-primary text-white"
                 )}
                 onClick={() => {
                   setIsActive({ title: i, chapter: x });
                   handleVideoLink(content.contentUrl);
+                  setIsloading(a => (!a))
                 }}
               >
                 <ChapterItem
@@ -73,7 +76,7 @@ const ProgressCourse = ({
                   index={x}
                   isActive={isActive.title === i && isActive.chapter === x}
                   onVideoClick={onVideoClick}
-                  // handleContentStatus={() => handleContentStatus()}
+                // handleContentStatus={() => handleContentStatus()}
                 />
               </div>
             ))}

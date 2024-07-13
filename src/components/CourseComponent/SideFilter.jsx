@@ -5,12 +5,37 @@ import { cn } from "../../libs/utils";
 import { XCircle } from "lucide-react";
 import { FaFilter } from "react-icons/fa";
 
-const SideFilter = ({ categorys, levels, handleCheckboxChange }) => {
+const SideFilter = ({ categorys, handleSelectLevel, handleCheckboxChange , setSelectLevel}) => {
   const [open, setOpen] = useState(false);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   if (!categorys) {
     return null;
   }
   const level = ["Beginner", "Intermediate", "Advanced"];
+
+  const handleRadioChange = (e) => {
+    setSelectedLevel(e.target.value);
+    handleSelectLevel(e)
+  };
+
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    setSelectedCategories((prev) =>
+      prev.includes(value)
+        ? prev.filter((id) => id !== value)
+        : [...prev, value]
+    );
+    handleCheckboxChange(e);
+  };
+
+  const resetFilters = () => {
+    setSelectedLevel(null);
+    setSelectedCategories([]);
+    setSelectLevel("")
+    // If handleCheckboxChange needs to be called on reset, you can do it here
+  };
 
   return (
     <>
@@ -49,8 +74,8 @@ const SideFilter = ({ categorys, levels, handleCheckboxChange }) => {
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    value={category.categoryName}
-                    onChange={handleCheckboxChange}
+                    value={category.id}
+                    onChange={handleCategoryChange}
                   />
                   <span className="checkbox-custom rectangular"></span>
                 </label>
@@ -60,7 +85,7 @@ const SideFilter = ({ categorys, levels, handleCheckboxChange }) => {
               </div>
             ))}
           </div>
-          {/* level kesulitah */}
+          {/* level kesulitan */}
           <div className="mx-5 my-2">
             <h1 className="text-lg font-bold tracking-wider">
               Level Kesulitan
@@ -69,9 +94,11 @@ const SideFilter = ({ categorys, levels, handleCheckboxChange }) => {
               <div className="flex items-center my-2 ml-1" key={index}>
                 <label className="checkbox-label">
                   <input
-                    type="checkbox"
+                    type="radio"
                     value={item}
-                    onChange={handleCheckboxChange}
+                    name="level"
+                    checked={selectedLevel === item}
+                    onChange={handleRadioChange}
                   />
                   <span className="checkbox-custom rectangular"></span>
                 </label>
@@ -83,7 +110,10 @@ const SideFilter = ({ categorys, levels, handleCheckboxChange }) => {
           </div>
           {/* tombol untuk hapus filter */}
           <div className="mx-5 my-3">
-            <button className="w-full p-1 mb-4 font-semibold text-red-500 transition duration-300 bg-white rounded-md -tracking-wider bg-inherit md:bg-transparent hover:bg-red-500 hover:text-white hover:scale-105">
+            <button
+              className="w-full p-1 mb-4 font-semibold text-red-500 transition duration-300 bg-white rounded-md -tracking-wider bg-inherit md:bg-transparent hover:bg-red-500 hover:text-white hover:scale-105"
+              onClick={resetFilters}
+            >
               Hapus Filter
             </button>
           </div>

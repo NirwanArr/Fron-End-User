@@ -31,6 +31,8 @@ const MyCoursePage = () => {
     };
     fetchData();
   }, [userId]);
+
+
   const handleCheckboxChange = (e) => {
     setValueChecked(e.target.checked ? e.target.value : "");
   };
